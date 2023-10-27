@@ -44,10 +44,7 @@ public class App
         Double[] array_h = list_h.toArray(new Double[list_h.size()]);
         Double[] array_d = list_d.toArray(new Double[list_d.size()]);
 
-        // Create a KernelDensity instance with Gaussian kernel
-        KernelDensity kernelDensity = new KernelDensity();
-        kernelDensity.setBandwidth(bandwidth);
-        kernelDensity.setKernel(new GaussianKernel());
+
 
         // Create a chart
         JFreeChart chart = ChartFactory.createBarChart("Distribution Chart", "X-Axis", "Y-Axis", dataset, PlotOrientation.VERTICAL, true, true, false);
@@ -66,6 +63,8 @@ public class App
         }
         return result;
     }
+
+
 }
 
 class DistrResult{
