@@ -20,16 +20,22 @@ import java.util.TreeMap;
 public class ExampleDiagramm {
 
     public static void main(String[] args) {
+        generateImageAsTest();
+        generateReferenceHistogram();
+    }
+
+    private static void generateImageAsTest() {
+        Environment testEnvironment = new Environment(3.6, 2, 10, 1.5);
+        double[] testData = generateRealWorldData(testEnvironment);
+        JFreeChart histogrammChart = generateChart(testData);
+        saveChartAsPNG("testChart.png", 800, 600, histogrammChart);
+    }
+
+    private static void generateReferenceHistogram() {
         Environment environment = new Environment(3.6, 5.0, 6.3, 4.0);
-//        Environment environment = new Environment(3.6, 2, 10, 1.5);
-//        double[] fancyData = generateRealWorldData(environment);
-
-        Map<Situation, Double[]> fancyRealWorld = createRawWorld(environment);
-        JFreeChart coloredExample = generateChart(fancyRealWorld);
-
-//        JFreeChart example = generateChart(fancyData);
-//        saveChartAsPNG("correctData.png", 800, 600, example);
-        saveChartAsPNG("correctData.png", 800, 600, coloredExample);
+        Map<Situation, Double[]> referenceData = createRawWorld(environment);
+        JFreeChart coloredExample = generateChart(referenceData);
+        saveChartAsPNG("referenceChart.png", 800, 600, coloredExample);
     }
 
     private static double[] parseDoubleToPrimitiv(Double[] input) {
