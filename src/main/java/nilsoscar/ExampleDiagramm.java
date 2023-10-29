@@ -75,7 +75,6 @@ public class ExampleDiagramm {
         plot.getRenderer().setSeriesPaint(0, new Color(255, 0, 0, 128)); // Rot mit 50% Transparenz für Dataset 1
         plot.getRenderer().setSeriesPaint(1, new Color(0, 0, 255, 128)); // Blau mit 50% Transparenz für Dataset 2
 
-
         return chart;
     }
 
@@ -83,7 +82,7 @@ public class ExampleDiagramm {
         HistogramDataset dataset = new HistogramDataset();
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
         double[] data = dataFromEvn;
-        int numberOfBins = 300;
+        int numberOfBins = 50;
         dataset.addSeries("Data", data, numberOfBins);
 
         JFreeChart chart = ChartFactory.createHistogram(
@@ -100,7 +99,7 @@ public class ExampleDiagramm {
     }
 
     private static double[] generateRealWorldData(Environment environment) {
-        int sampleSize = 10_000;
+        int sampleSize = 100_000;
         double[] result = new double[sampleSize];
 
         for (int i = 0; i < sampleSize; i++) {
@@ -112,7 +111,7 @@ public class ExampleDiagramm {
 
     private static Map<Situation, Double[]> createRawWorld(Environment environment) {
         Map<Situation, Double[]> resultMap = new TreeMap<>();
-        int sampleSize = 10_000;
+        int sampleSize = 100_000;
         Double[] harmless = new Double[sampleSize/2];
         Double[] danger = new Double[sampleSize/2];
 
