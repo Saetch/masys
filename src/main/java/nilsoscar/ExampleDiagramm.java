@@ -72,8 +72,8 @@ public class ExampleDiagramm {
         );
 
         XYPlot plot = (XYPlot) chart.getPlot();
-        plot.getRenderer().setSeriesPaint(0, new Color(255, 0, 0, 128)); // Rot mit 50% Transparenz für Dataset 1
-        plot.getRenderer().setSeriesPaint(1, new Color(0, 0, 255, 128)); // Blau mit 50% Transparenz für Dataset 2
+        plot.getRenderer().setSeriesPaint(0, new Color(0, 255, 0, 96)); // green equals harmless situation
+        plot.getRenderer().setSeriesPaint(1, new Color(255, 0, 0, 96)); // read equals dangerous situation
 
         return chart;
     }
