@@ -25,14 +25,14 @@ public class ExampleDiagramm {
     }
 
     private static void generateImageAsTest() {
-        Environment testEnvironment = new Environment(3.6, 2, 10, 1.5);
+        Environment testEnvironment = new Environment(3.5, 5.0, 6.3, 4.0);
         double[] testData = generateRealWorldData(testEnvironment);
         JFreeChart histogrammChart = generateChart(testData);
         saveChartAsPNG("testChart.png", 800, 600, histogrammChart);
     }
 
     private static void generateReferenceHistogram() {
-        Environment environment = new Environment(3.6, 5.0, 6.3, 4.0);
+        Environment environment = new Environment(3.5, 5.0, 6.3, 4.0);
         Map<Situation, Double[]> referenceData = createRawWorld(environment);
         JFreeChart coloredExample = generateChart(referenceData);
         saveChartAsPNG("referenceChart.png", 800, 600, coloredExample);
@@ -55,7 +55,7 @@ public class ExampleDiagramm {
 
         double[] harmlessData = parseDoubleToPrimitiv(fancyRealWorld.get(Situation.HARMLESS));
         double[] dangerData = parseDoubleToPrimitiv(fancyRealWorld.get(Situation.DANGER));
-        int numberOfBins = 50;
+        int numberOfBins = 200;
 
         dataset.addSeries("Harmless", harmlessData, numberOfBins);
         dataset.addSeries("Danger", dangerData, numberOfBins);
@@ -82,7 +82,7 @@ public class ExampleDiagramm {
         HistogramDataset dataset = new HistogramDataset();
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
         double[] data = dataFromEvn;
-        int numberOfBins = 50;
+        int numberOfBins = 200;
         dataset.addSeries("Data", data, numberOfBins);
 
         JFreeChart chart = ChartFactory.createHistogram(
@@ -99,7 +99,7 @@ public class ExampleDiagramm {
     }
 
     private static double[] generateRealWorldData(Environment environment) {
-        int sampleSize = 100_000;
+        int sampleSize = 10_000_000;
         double[] result = new double[sampleSize];
 
         for (int i = 0; i < sampleSize; i++) {
@@ -111,7 +111,7 @@ public class ExampleDiagramm {
 
     private static Map<Situation, Double[]> createRawWorld(Environment environment) {
         Map<Situation, Double[]> resultMap = new TreeMap<>();
-        int sampleSize = 100_000;
+        int sampleSize = 10_000_000;
         Double[] harmless = new Double[sampleSize/2];
         Double[] danger = new Double[sampleSize/2];
 
