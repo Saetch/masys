@@ -1,6 +1,7 @@
 package nilsoscar.agents;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
@@ -10,7 +11,7 @@ import nilsoscar.environment.Situation;
 
 public class Agent {
     private List<Double>[] measurements;
-    public int minimumRequiredMatches = 24;
+    public int minimumRequiredMatches = 4;
 
 
     public Agent() {
@@ -60,7 +61,7 @@ public class Agent {
         }
 
         //use successive approximation on the own data for finding the right t? Idk, I'm just doing it
-        Situation retVal = this.checkDistToClosestNeighbors(envData.measurement());
+        Situation retVal = this.checkDistToClosestNeighbors(envData.measurement(), harmless_mean, danger_mean);
 
 
 
@@ -68,7 +69,7 @@ public class Agent {
     }
 
 
-    private Situation checkDistToClosestNeighbors(Double point){
+    private Situation checkDistToClosestNeighbors(Double point, Double harmless_mean, Double danger_mean){
 
         int len = measurements[0].size() < measurements[1].size() ? measurements[0].size() : measurements[1].size();
 
@@ -76,15 +77,43 @@ public class Agent {
         Stream<Double> harmlessStream = measurements[0].stream().limit(len);
         Stream<Double> dangerStream = measurements[1].stream().limit(len);
         int numberOfNeighbors = this.minimumRequiredMatches > len ? len : this.minimumRequiredMatches;
-
+        
         //find the closest neighbors 
         DoubleStream harmlessNeighbors = harmlessStream.mapToDouble(m -> Math.abs(m - point)).sorted().limit(numberOfNeighbors);
         DoubleStream dangerNeighbors = dangerStream.mapToDouble(m -> Math.abs(m - point)).sorted().limit(numberOfNeighbors);
     
         //get the average distance to the neighbors
-        double harmlessAvg = harmlessNeighbors.average().getAsDouble();
-        double dangerAvg = dangerNeighbors.average().getAsDouble();
-        
+        Double harmlessAvg = harmlessNeighbors.average().getAsDouble();
+        Double dangerAvg = dangerNeighbors.average().getAsDouble();
+
+
+
+        //attempt at evening out the by using an approximate average spread
+        if(measurements[0].size() > 2 && measurements[1].size() > 2){
+            Stream<Double> harmless = measurements[0].stream().limit(len);
+            Stream<Double> danger = measurements[1].stream().limit(len);
+            //need to reverse it, but Java Streams do not support reversing ...
+            List<Double> harmless_spread = harmless.mapToDouble(m -> Math.abs(m - harmless_mean)).sorted().collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+            Collections.reverse(harmless_spread);
+            long h_limit = (measurements[Situation.HARMLESS.ordinal()].size()/10)+2;
+            long d_limit = (measurements[Situation.DANGER.ordinal()].size()/10)+2;
+            harmless = harmless_spread.stream().limit(h_limit);
+            List<Double> danger_spread = danger.mapToDouble(m -> Math.abs(m - danger_mean)).sorted().collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+            Collections.reverse(danger_spread);
+            danger = danger_spread.stream().limit(d_limit);
+            long harmless_len = harmless.count();
+            long danger_len = danger.count();
+            danger = danger_spread.stream().limit(h_limit);
+            harmless = harmless_spread.stream().limit(d_limit);
+            Double avg_spread_harmless = harmless.skip(danger_len-2).mapToDouble(m->m).average().getAsDouble();
+            Double avg_spread_danger = danger.skip(harmless_len-2).mapToDouble(m->m).average().getAsDouble();
+
+
+            harmlessAvg /= avg_spread_harmless;
+            dangerAvg /= avg_spread_danger;
+        }
+
+
         //if the distance to the harmless neighbors is smaller, it is more likely to be harmless
         if(harmlessAvg < dangerAvg){
             return Situation.HARMLESS;

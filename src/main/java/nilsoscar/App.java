@@ -73,7 +73,6 @@ class World{
         final int RUNS  = 1_000;
         int correct_guesses = 0;
         Double corret_val;
-
         //I want to check how many times the agent guesses correctly in a certain number of guesses, before I add more information
         for (int i = 0; i < RUNS; i++){
             EnvData data = environment.nextValue();
@@ -82,6 +81,7 @@ class World{
             if(guess == data.reality()){
                 correct_guesses++;
             }
+
 
         }
         corret_val = (double) correct_guesses / RUNS;
