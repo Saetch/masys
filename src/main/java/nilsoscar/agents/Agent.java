@@ -10,7 +10,7 @@ import nilsoscar.environment.Situation;
 
 public class Agent {
     private List<Double>[] measurements;
-    public int minimumRequiredMatches = 3;
+    public int minimumRequiredMatches = 24;
 
 
     public Agent() {
@@ -108,9 +108,9 @@ public class Agent {
         int lower_len = measurements[0].size() < measurements[1].size() ? measurements[0].size() : measurements[1].size();
 
         //I chose an arbitrary rule to set the number of required matches, in this case y = 2x² for a more sophisticated approach, this should propably be tested for what works best
-        if( lower_len > 2*Math.pow(this.minimumRequiredMatches, 2)){
-            this.minimumRequiredMatches++;
-        }
+        //if( lower_len > 2*Math.pow(this.minimumRequiredMatches, 2)){
+        //    this.minimumRequiredMatches++;
+        //}
 
         return lower_len;
     }
