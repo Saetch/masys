@@ -44,10 +44,7 @@ public class App
             if(c % 10 == 0){
                 System.out.println("Average correct guesses after "+c+" worlds:");
                 for(int i = 0; i < MAX_DRAWS_PER_WORLD; i++){
-                    Double sum = 0.0;
-                    for(Double d : results[i]){
-                        sum += d;
-                    }
+                    Double sum = results[i].stream().mapToDouble(a -> a).sum();
                     System.out.println("After "+i+" draws: "+sum/c);
                 }
             }
