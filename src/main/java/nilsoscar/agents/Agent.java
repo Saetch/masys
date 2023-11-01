@@ -11,7 +11,7 @@ import nilsoscar.environment.Situation;
 
 public class Agent {
     private List<Double>[] measurements;
-    public int minimumRequiredMatches = 4;
+    public int minimumRequiredMatches = 31;
 
 
     public Agent() {

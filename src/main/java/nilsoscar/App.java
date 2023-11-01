@@ -16,7 +16,7 @@ public class App
     public static void main( String[] args )
     {   
 
-        final int MAX_DRAWS_PER_WORLD = 200;
+        final int MAX_DRAWS_PER_WORLD = 250;
         int c = 0;
 
         //this is just stuff I added to give better output
@@ -41,8 +41,8 @@ public class App
 
 
             c++;
-            if(c % 10 == 0){
-                System.out.println("Average correct guesses after "+c+" worlds:");
+            if(c % 100 == 0){
+                System.out.println("Average correct guesses after "+c+1+" worlds:");
                 for(int i = 0; i < MAX_DRAWS_PER_WORLD; i++){
                     Double sum = results[i].stream().mapToDouble(a -> a).sum();
                     System.out.println("After "+i+" draws: "+sum/c);
@@ -70,7 +70,7 @@ class World{
     }
 
     public Double testerRun(int index){
-        final int RUNS  = 1_000;
+        final int RUNS  = 100;
         int correct_guesses = 0;
         Double corret_val;
         //I want to check how many times the agent guesses correctly in a certain number of guesses, before I add more information

@@ -99,7 +99,7 @@ public class ExampleDiagramm {
     }
 
     private static double[] generateRealWorldData(Environment environment) {
-        int sampleSize = 10_000_000;
+        int sampleSize = 100_000_000;
         double[] result = new double[sampleSize];
 
         for (int i = 0; i < sampleSize; i++) {
@@ -111,7 +111,7 @@ public class ExampleDiagramm {
 
     private static Map<Situation, Double[]> createRawWorld(Environment environment) {
         Map<Situation, Double[]> resultMap = new TreeMap<>();
-        int sampleSize = 10_000_000;
+        int sampleSize = 100_000_000;
         Double[] harmless = new Double[sampleSize/2];
         Double[] danger = new Double[sampleSize/2];
 
