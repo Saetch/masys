@@ -120,10 +120,10 @@ public class ExampleDiagramm {
         int dangerCounter = 0;
         for (int i = 0; i < sampleSize; i++) {
             EnvData envData = environment.nextValue();
-            if (envData.reality() == Situation.HARMLESS && (harmlessCounter) < harmless.length) {
+            if (envData.situation() == Situation.HARMLESS && (harmlessCounter) < harmless.length) {
                 harmless[harmlessCounter] = envData.measurement();
                 harmlessCounter++;
-            } else if (envData.reality() == Situation.DANGER && (dangerCounter) < danger.length) {
+            } else if (envData.situation() == Situation.DANGER && (dangerCounter) < danger.length) {
                 danger[dangerCounter] = envData.measurement();
                 dangerCounter++;
             }

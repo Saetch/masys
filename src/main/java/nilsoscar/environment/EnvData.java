@@ -1,4 +1,4 @@
 package nilsoscar.environment;
 
-public record EnvData(double measurement, Situation reality) {
+public record EnvData(double measurement, Situation situation) {
 }

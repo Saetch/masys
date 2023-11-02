@@ -12,7 +12,7 @@ import nilsoscar.environment.Situation;
 public class Agent {
     private List<Double>[] measurements;
     public int minimumRequiredMatches = 31;
-
+    public int points = 0;
 
     public Agent() {
         this.measurements = new ArrayList[2];
@@ -66,6 +66,15 @@ public class Agent {
 
 
         return retVal;
+    }
+
+
+    public void truePositive(){
+        this.points++;
+    }
+
+    public void falsePositive(){
+        this.points--;
     }
 
 
@@ -124,7 +133,7 @@ public class Agent {
 
 
     public int addMeasurement(EnvData envData) {
-        int index = envData.reality().ordinal();
+        int index = envData.situation().ordinal();
         if(measurements[index] == null){
             measurements[index] = new ArrayList<Double>();
         }

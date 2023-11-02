@@ -29,4 +29,14 @@ public class Environment {
         return result;
     }
 
+    public EnvData drawValue(Situation situation) {
+        EnvData result;
+        if (situation == Situation.HARMLESS) {
+            result = new EnvData(harmless.sample(), Situation.HARMLESS);
+        } else {
+            result = new EnvData(danger.sample(), Situation.DANGER);
+        }
+        return result;
+    }
+
 }
