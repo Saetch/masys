@@ -26,7 +26,7 @@ public class App
 
     static void quorumTest(){
         final int MAX_DRAWS_PER_WORLD = 100;
-        final int NUMBER_OF_AGENTS_BOUND = 200;
+        final int NUMBER_OF_AGENTS_BOUND = 250;
         final int NUMBER_OF_TRIES = 1_000;
         for (int agent_count = 1; agent_count <= NUMBER_OF_AGENTS_BOUND; agent_count++){
             List<Double>[] results = new ArrayList[MAX_DRAWS_PER_WORLD];
