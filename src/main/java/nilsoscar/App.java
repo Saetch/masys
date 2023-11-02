@@ -3,7 +3,6 @@ package nilsoscar;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.math3.analysis.function.Max;
 
 import nilsoscar.agents.Agent;
 import nilsoscar.agents.Quorum;
