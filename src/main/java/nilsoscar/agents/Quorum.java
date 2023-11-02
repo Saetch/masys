@@ -9,7 +9,7 @@ import nilsoscar.environment.Situation;
 
 public class Quorum {
     public List<Agent> agents = new ArrayList<>();
-    public double threshold = 0.5;
+    public double threshold = 0.51;
     public Environment environment;
 
 

@@ -19,7 +19,7 @@ public class App
     {   
 
         quorumTest();
-        // singleTest();
+        //singleTest();
     }
 
 
@@ -27,7 +27,7 @@ public class App
         final int MAX_DRAWS_PER_WORLD = 100;
         final int NUMBER_OF_AGENTS_BOUND = 250;
         final int NUMBER_OF_TRIES = 1_000;
-        for (int agent_count = 1; agent_count <= NUMBER_OF_AGENTS_BOUND; agent_count++){
+        for (int agent_count = 220; agent_count <= NUMBER_OF_AGENTS_BOUND; agent_count++){
             List<Double>[] results = new ArrayList[MAX_DRAWS_PER_WORLD];
             List<Double>[] points = new ArrayList[MAX_DRAWS_PER_WORLD];
             for (int i = 0; i < MAX_DRAWS_PER_WORLD; i++){
@@ -79,7 +79,7 @@ public class App
 
 
     static void singleTest(){
-        final int MAX_DRAWS_PER_WORLD = 250;
+        final int MAX_DRAWS_PER_WORLD = 1000;
         int c = 0;
 
         //this is just stuff I added to give better output

@@ -12,7 +12,7 @@ import nilsoscar.environment.Situation;
 public class Agent {
     private Double[] measurements_harmless;
     private Double[] measurements_danger;
-    public int minimumRequiredMatches = 15;
+    public int minimumRequiredMatches = 20;
     public int points = 0;
 
     private int harmless_index = 0;
@@ -23,8 +23,8 @@ public class Agent {
     private boolean full_circle_harmless = false;
     private boolean full_circle_danger = false;
     public Agent() {
-        this.measurements_harmless = new Double[15];
-        this.measurements_danger = new Double[15];
+        this.measurements_harmless = new Double[30];
+        this.measurements_danger = new Double[30];
     }
 
 
