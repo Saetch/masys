@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class Environment {
 
-    private final NormalDistribution danger;
-    private final NormalDistribution harmless;
+    private NormalDistribution danger;
+    private NormalDistribution harmless;
     private final Random random;
 
     public Environment(double harmlessMean, double harmlessStdDev, double dangerMean, double dangerStdDev) {
@@ -37,6 +37,14 @@ public class Environment {
             result = new EnvData(danger.sample(), Situation.DANGER);
         }
         return result;
+    }
+
+    public void updateHarmless(double mean, double stdDev) {
+        this.harmless = new NormalDistribution(mean, stdDev);
+    }
+
+    public void updateDanger(double mean, double stdDev) {
+        this.danger = new NormalDistribution(mean, stdDev);
     }
 
 }
