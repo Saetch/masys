@@ -21,17 +21,18 @@ public class App
     public static void main( String[] args )
     {   
 
-        //quorumTest();
-        singleTest();
+        quorumTest();
+        //singleTest();
     }
 
 
     static void quorumTest(){
-        final int MAX_DRAWS_PER_WORLD = 150;
+        final int MAX_DRAWS_PER_WORLD = 75;
         final int NUMBER_OF_AGENTS_BOUND = 250;
         final int NUMBER_OF_TRIES = 1_000;
-        final boolean CHANGE_ENV = true;
-        for (int agent_count = 10; agent_count <= NUMBER_OF_AGENTS_BOUND; agent_count++){
+        final boolean CHANGE_ENV = false;
+        double[] overall_points = new double[NUMBER_OF_AGENTS_BOUND];
+        for (int agent_count = 1; agent_count <= NUMBER_OF_AGENTS_BOUND; agent_count++){
             List<Double>[] results = new ArrayList[MAX_DRAWS_PER_WORLD*2];
             List<Double>[] points = new ArrayList[MAX_DRAWS_PER_WORLD*2];
             for (int i = 0; i < MAX_DRAWS_PER_WORLD*2; i++){
@@ -63,7 +64,6 @@ public class App
                     results[j].add(result.correct_val());
                     points[j].add(result.points());
                 }
-                //System.out.println("threshold: "+quorum.threshold+" agent_count: "+agent_count+" try: "+i);
             }
 
             System.out.println("Test with "+agent_count+" agents is done!");
@@ -72,7 +72,11 @@ public class App
                 Double sum = results[i].stream().mapToDouble(a -> a).average().getAsDouble();
                 System.out.println("Chance for correct guesses at "+i+" draws: "+sum);
                 Double points_sum = points[i].stream().mapToDouble(a -> a).average().getAsDouble();
+
                 System.out.println("Points After "+i+" draws per draw: "+points_sum);
+                if (i == MAX_DRAWS_PER_WORLD*2-1){
+                    overall_points[agent_count-1] = points_sum;
+                }
             }
             System.out.println("This was with "+agent_count+" agents");
 
@@ -81,6 +85,11 @@ public class App
 
         }
 
+        double[] xValues = new double[NUMBER_OF_AGENTS_BOUND];
+        for (int i = 0; i < NUMBER_OF_AGENTS_BOUND; i++){
+            xValues[i] = i;
+        }
+        writeCSV("quorum_test_number_of_agents_points_after_150_draws.csv", xValues, overall_points);
 
 
     }
