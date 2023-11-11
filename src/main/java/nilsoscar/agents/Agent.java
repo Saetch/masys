@@ -12,7 +12,7 @@ import nilsoscar.environment.Situation;
 public class Agent {
     private Double[] measurements_harmless;
     private Double[] measurements_danger;
-    public int minimumRequiredMatches = 15;
+    public int minimumRequiredMatches = 5;
     public int points = 0;
 
     private int harmless_index = 0;
@@ -23,8 +23,8 @@ public class Agent {
     private boolean full_circle_harmless = false;
     private boolean full_circle_danger = false;
     public Agent() {
-        this.measurements_harmless = new Double[15];
-        this.measurements_danger = new Double[15];
+        this.measurements_harmless = new Double[10];
+        this.measurements_danger = new Double[10];
     }
 
 
@@ -49,8 +49,6 @@ public class Agent {
             return Situation.values()[(int) (Math.random() * Situation.values().length)];
         }
 
-
-        //if it is outside of the contested range, we should be able to guess the more likely solution
         if(envData.measurement() <= harmless_mean){
             return Situation.HARMLESS;
         }
@@ -75,6 +73,9 @@ public class Agent {
         this.points--;
     }
 
+    public void resetPoints(){
+        this.points = 0;
+    }
 
     private Situation checkDistToClosestNeighbors(Double point, Double harmless_mean, Double danger_mean){
         int len_harmless = full_circle_harmless ? measurements_harmless.length : harmless_index;
@@ -147,7 +148,9 @@ public class Agent {
             if(this.danger_index >= this.measurements_danger.length){
                 this.danger_index = 0;
                 this.full_circle_danger = true;
+                
             }
+
         }
 
     }

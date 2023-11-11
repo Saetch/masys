@@ -27,13 +27,14 @@ public class App
 
 
     static void quorumTest(){
-        final int MAX_DRAWS_PER_WORLD = 100;
+        final int MAX_DRAWS_PER_WORLD = 150;
         final int NUMBER_OF_AGENTS_BOUND = 250;
         final int NUMBER_OF_TRIES = 1_000;
-        for (int agent_count = 1; agent_count <= NUMBER_OF_AGENTS_BOUND; agent_count++){
-            List<Double>[] results = new ArrayList[MAX_DRAWS_PER_WORLD];
-            List<Double>[] points = new ArrayList[MAX_DRAWS_PER_WORLD];
-            for (int i = 0; i < MAX_DRAWS_PER_WORLD; i++){
+        final boolean CHANGE_ENV = true;
+        for (int agent_count = 10; agent_count <= NUMBER_OF_AGENTS_BOUND; agent_count++){
+            List<Double>[] results = new ArrayList[MAX_DRAWS_PER_WORLD*2];
+            List<Double>[] points = new ArrayList[MAX_DRAWS_PER_WORLD*2];
+            for (int i = 0; i < MAX_DRAWS_PER_WORLD*2; i++){
                 results[i] = new ArrayList<Double>();
                 points[i] = new ArrayList<Double>();
             }
@@ -52,16 +53,22 @@ public class App
                 world.quorum = quorum;
 
                 //I give every test run about X draws, so that the agent has a chance to get a good idea of the situation, then reset
-                for(int j = 0; j < MAX_DRAWS_PER_WORLD; j++){
+                for(int j = 0; j < MAX_DRAWS_PER_WORLD*2; j++){
+                    if(j == MAX_DRAWS_PER_WORLD) {
+                        if(CHANGE_ENV){
+                            quorum.environment = new Environment(6.5, 5.0, 9.3, 4.0);
+                        }
+                    }
                     ResultValue result = world.quorumRun();
                     results[j].add(result.correct_val());
                     points[j].add(result.points());
                 }
+                //System.out.println("threshold: "+quorum.threshold+" agent_count: "+agent_count+" try: "+i);
             }
 
             System.out.println("Test with "+agent_count+" agents is done!");
 
-            for (int i = 0; i < MAX_DRAWS_PER_WORLD; i++){
+            for (int i = MAX_DRAWS_PER_WORLD-1; i < MAX_DRAWS_PER_WORLD*2; i++){
                 Double sum = results[i].stream().mapToDouble(a -> a).average().getAsDouble();
                 System.out.println("Chance for correct guesses at "+i+" draws: "+sum);
                 Double points_sum = points[i].stream().mapToDouble(a -> a).average().getAsDouble();
@@ -121,6 +128,7 @@ public class App
             if(c % 100_000 == 0){
                 System.out.println("Average correct guesses after "+c+1+" worlds:");
                 for(int i = 0; i < MAX_DRAWS_PER_WORLD; i++){
+                    if(!(i % 10==0)) continue;
                     Double sum = results[i].stream().mapToDouble(a -> a).average().getAsDouble();
                     System.out.println("Chance for correct guesses at "+i+" draws: "+sum);
                     Double points_sum = points[i].stream().mapToDouble(a -> a).average().getAsDouble();
