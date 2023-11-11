@@ -2,7 +2,10 @@ package nilsoscar;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.opencsv.CSVWriter;
 
+import java.io.FileWriter;
+import java.io.IOException;
 
 import nilsoscar.agents.Agent;
 import nilsoscar.agents.Quorum;
@@ -18,8 +21,8 @@ public class App
     public static void main( String[] args )
     {   
 
-        quorumTest();
-        // singleTest();
+        //quorumTest();
+        singleTest();
     }
 
 
@@ -79,7 +82,7 @@ public class App
 
 
     static void singleTest(){
-        final int MAX_DRAWS_PER_WORLD = 250;
+        final int MAX_DRAWS_PER_WORLD = 500;
         int c = 0;
 
         //this is just stuff I added to give better output
@@ -103,6 +106,10 @@ public class App
 
             //I give every test run about X draws, so that the agent has a chance to get a good idea of the situation, then reset
             for(int i = 0; i < MAX_DRAWS_PER_WORLD; i++){
+                if(i==400){
+                    Environment new_env = new Environment(6.5, 5.0, 9.3, 4.0);
+                    world.environment = new_env;
+                }
                 ResultValue result = world.testerRun(0);
                 results[i].add(result.correct_val());
                 points[i].add(result.points());
@@ -121,12 +128,47 @@ public class App
                     System.out.println("This means "+points_sum/i+" points per draw");
                 }
             }
+            if ( c == 70_000){
+                System.out.println("Writing to CSV");
+                double[] xValues = new double[MAX_DRAWS_PER_WORLD];
+                double[] yValues = new double[MAX_DRAWS_PER_WORLD];
+                for (int i = 0; i < MAX_DRAWS_PER_WORLD; i++){
+                    xValues[i] = i;
+                    if(i > 1){
+                        yValues[i] = points[i].stream().mapToDouble(a -> a).average().getAsDouble() - points[i-1].stream().mapToDouble(a -> a).average().getAsDouble();
+                    }else{
+                        yValues[i] = points[i].stream().mapToDouble(a -> a).average().getAsDouble() / ((double)i + 1.0);
+                    }
+                }
+                writeCSV("single_test_change_env_at_400_draws.csv", xValues, yValues);
+                System.out.println("Done writing to CSV");
+                break;
+            }
         }
         while (true);
 
     }
 
+
+    private static void writeCSV(String filePath, double[] xValues, double[] yValues) {
+        try (CSVWriter writer = new CSVWriter(new FileWriter(filePath))) {
+            // Write header if needed
+            // writer.writeNext(new String[]{"X", "Y"});
+
+            // Write data
+            for (int i = 0; i < xValues.length; i++) {
+                writer.writeNext(new String[]{String.valueOf(xValues[i]), String.valueOf(yValues[i])});
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }
+
+
 
 class World{
     List<Agent> agents;
