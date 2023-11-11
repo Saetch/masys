@@ -27,12 +27,12 @@ public class App
 
 
     static void quorumTest(){
-        final int MAX_DRAWS_PER_WORLD = 75;
+        final int MAX_DRAWS_PER_WORLD = 100;
         final int NUMBER_OF_AGENTS_BOUND = 250;
         final int NUMBER_OF_TRIES = 1_000;
-        final boolean CHANGE_ENV = false;
+        final boolean CHANGE_ENV = true;
         double[] overall_points = new double[NUMBER_OF_AGENTS_BOUND];
-        for (int agent_count = 1; agent_count <= NUMBER_OF_AGENTS_BOUND; agent_count++){
+        for (int agent_count = 70; agent_count <= NUMBER_OF_AGENTS_BOUND; agent_count++){
             List<Double>[] results = new ArrayList[MAX_DRAWS_PER_WORLD*2];
             List<Double>[] points = new ArrayList[MAX_DRAWS_PER_WORLD*2];
             for (int i = 0; i < MAX_DRAWS_PER_WORLD*2; i++){
@@ -68,20 +68,28 @@ public class App
 
             System.out.println("Test with "+agent_count+" agents is done!");
 
-            for (int i = MAX_DRAWS_PER_WORLD-1; i < MAX_DRAWS_PER_WORLD*2; i++){
+
+            double[] xValues = new double[MAX_DRAWS_PER_WORLD*2];
+            double[] yValues = new double[MAX_DRAWS_PER_WORLD*2];
+            for (int i = 0; i < MAX_DRAWS_PER_WORLD*2; i++){
+                xValues[i] = i;
                 Double sum = results[i].stream().mapToDouble(a -> a).average().getAsDouble();
                 System.out.println("Chance for correct guesses at "+i+" draws: "+sum);
+            
                 Double points_sum = points[i].stream().mapToDouble(a -> a).average().getAsDouble();
-
+                yValues[i] = points_sum;
                 System.out.println("Points After "+i+" draws per draw: "+points_sum);
                 if (i == MAX_DRAWS_PER_WORLD*2-1){
                     overall_points[agent_count-1] = points_sum;
                 }
+                //csv
+                writeCSV("quorum_test_continuous_values_env_change_at_100_with_100_agents", xValues, yValues);
             }
             System.out.println("This was with "+agent_count+" agents");
 
             System.out.println("\n\n\n");
 
+            break;
 
         }
 
