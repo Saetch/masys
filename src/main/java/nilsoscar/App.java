@@ -28,7 +28,7 @@ public class App
         final int NUMBER_OF_AGENTS_BOUND = 250;
         final int NUMBER_OF_TRIES = 1_000;
         final boolean CHANGE_ENV = true;
-        for (int agent_count = 1; agent_count <= NUMBER_OF_AGENTS_BOUND; agent_count++){
+        for (int agent_count = 10; agent_count <= NUMBER_OF_AGENTS_BOUND; agent_count++){
             List<Double>[] results = new ArrayList[MAX_DRAWS_PER_WORLD*2];
             List<Double>[] points = new ArrayList[MAX_DRAWS_PER_WORLD*2];
             for (int i = 0; i < MAX_DRAWS_PER_WORLD*2; i++){
@@ -60,6 +60,7 @@ public class App
                     results[j].add(result.correct_val());
                     points[j].add(result.points());
                 }
+                //System.out.println("threshold: "+quorum.threshold+" agent_count: "+agent_count+" try: "+i);
             }
 
             System.out.println("Test with "+agent_count+" agents is done!");
