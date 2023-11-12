@@ -20,7 +20,7 @@ import java.util.TreeMap;
 public class ExampleDiagramm {
 
     public static void main(String[] args) {
-        generateImageAsTest();
+//        generateImageAsTest();
         generateReferenceHistogram();
     }
 
@@ -55,15 +55,15 @@ public class ExampleDiagramm {
 
         double[] harmlessData = parseDoubleToPrimitiv(fancyRealWorld.get(Situation.HARMLESS));
         double[] dangerData = parseDoubleToPrimitiv(fancyRealWorld.get(Situation.DANGER));
-        int numberOfBins = 200;
+        int numberOfBins = 50;
 
-        dataset.addSeries("Harmless", harmlessData, numberOfBins);
-        dataset.addSeries("Danger", dangerData, numberOfBins);
+        dataset.addSeries("Harmlos", harmlessData, numberOfBins);
+        dataset.addSeries("Gefährlich", dangerData, numberOfBins);
 
         JFreeChart chart = ChartFactory.createHistogram(
-                "Wahrscheinlichkeitsverteilung",
+                "Wahrscheinlichkeitsverteilung beider Situationen",
                 "Werte",
-                "Häufigkeit",
+                "Relative Häufigkeit",
                 dataset,
                 PlotOrientation.VERTICAL,
                 true,

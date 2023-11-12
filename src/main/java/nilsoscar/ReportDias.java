@@ -33,30 +33,30 @@ public class ReportDias {
     private static void createThirdChart() {
         double[][] data = readFromVSC(differentAgents);
         JFreeChart chart = generateScatterPlot(data,
-                "Gesammelte Punkte für jeweilige Gruppengröße",
-                "Durchschnitt der gesammelten Punkte pro Zug als Gruppe mit wachsender Gruppengröße",
-                "Agenten",
-                "Gesammelte Punkte");
-        saveChartAsPNG("differentAgents.png", 1200, 400, chart);
+                "Durchschnittliche Erwartung an Punkten für den jeweiligen Zug",
+                "Zu erwartende Punkte nach 150 Zügen mit wachsender Gruppengröße",
+                "Anzahl an Agenten",
+                "Erwartete Punkte pro Zug für einen Agenten");
+        saveChartAsPNG("increasingNumberOfAgents.png", 1200, 400, chart);
     }
 
     private static void createSecondChart() {
         double[][] data = readFromVSC(quorumTest);
         JFreeChart chart = generateScatterPlot(data,
-                "Gesammelte Punkte für den jeweiligen Zug",
-                "Durchschnitt der gesammelten Punkte pro Zug als Gruppe von 100 Agenten mit Quorumsregel",
+                "Durchschnittliche Erwartung an Punkten für den jeweiligen Zug",
+                "Verlauf der zu erwartenden Punkte als Gruppe von 100 Agenten mit Quorumsregel",
                 "Züge",
-                "Gesammelte Punkte");
-        saveChartAsPNG("quorumsRun.png", 1200, 400, chart);
+                "Erwartete Punkte pro Zug für einen Agenten");
+        saveChartAsPNG("multipleAgents.png", 1200, 400, chart);
     }
 
     private static void createFirstChart() {
         double[][] data = readFromVSC(singleTest);
         JFreeChart chart = generateScatterPlot(data,
-                "Gesammelte Punkte für den jeweiligen Zug",
-                "Verlauf der gesammelten Punkte im Durchschnitt eines einzelnen Agenten",
+                "Durchschnittliche Erwartung an Punkten für den jeweiligen Zug",
+                "Verlauf der zu erwartenden Punkte eines einzelnen Agenten",
                 "Züge",
-                "Gesammelte Punkte");
+                "Erwartete Punkte pro Zug");
         saveChartAsPNG("singleAgent.png", 1200, 400, chart);
     }
 
